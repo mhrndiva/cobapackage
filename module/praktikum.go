@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/mhrnidiva/cobapackage/model"
+	"github.com/mhrndiva/cobapackage/model"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
