@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/indrariksa/cobapakcage/model"
-	"github.com/indrariksa/cobapakcage/module"
+
+	"github.com/mhrndiva/cobapackage/model"
+	"github.com/mhrndiva/cobapackage/module"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -75,3 +76,21 @@ func TestGetAll(t *testing.T) {
 	fmt.Println(data)
 }
 
+func TestDeletePresensiByID(t *testing.T) {
+	id := "645df264d1b7263ad2710ec9" // ID data yang ingin dihapus
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		t.Fatalf("error converting id to ObjectID: %v", err)
+	}
+
+	err = module.DeletePresensiByID(objectID, module.MongoConn, "presensi")
+	if err != nil {
+		t.Fatalf("error calling DeletePresensiByID: %v", err)
+	}
+
+	// Verifikasi bahwa data telah dihapus dengan melakukan pengecekan menggunakan GetPresensiFromID
+	_, err = module.GetPresensiFromID(objectID, module.MongoConn, "presensi")
+	if err == nil {
+		t.Fatalf("expected data to be deleted, but it still exists")
+	}
+}
